@@ -1,0 +1,134 @@
+function getUserName() {
+  $.ajax({
+    type: 'get',
+    url: '/user/get-info',
+    async: false,
+    dataType: 'json',
+    success: function (res) {
+      if (res.state == "yes") {
+        userName = res.username
+      }
+    }
+  })
+}
+
+var pathname = window.location.pathname;
+var userName = "";
+getUserName();
+
+document.writeln("<div class=\'header\'>");
+document.writeln("        <div class=\'com-div clearfix pos-rel\'>");
+if (userName == '') {
+  document.writeln("<div class=\'dropdown\'>");
+} else {
+  document.writeln("<div class=\'dropdown login-doc\'>");
+}
+document.writeln("        <div class=\'popper-arrow\'></div>");
+// document.writeln("        <div><a href=\'/docs.html\'>User Guige</a></div>");
+document.writeln("        <div><a href=\'/docs.html\'>Extensions</a></div>");
+document.writeln("      </div>");
+
+document.writeln("          <a href=\'/index.html\' class=\'fl\'>");
+document.writeln("            <img class=\'logo\' src=\'/static_front/img/logo-goby.svg\'>");
+document.writeln("          </a>");
+document.writeln("          <div class=\'clearfix links fr\'>");
+document.writeln("            <a class=\'mail\' href=\'mailto:gobysec@gmail.com\' target=\'_blank\'><i");
+document.writeln("                class=\'iconfont iconyouxiang\'></i>gobysec@gmail.com</a>");
+
+if (pathname == '/features.html') {
+  document.writeln("            <a class=\'link active mr10\' href=\'/features.html\'><span>Features</span></a>");
+} else {
+  document.writeln("            <a class=\'link mr10\' href=\'/features.html\'><span>Features</span></a>");
+}
+
+if (pathname == '/extension.html') {
+  document.writeln("            <a class=\'link active mr10\' href=\'/extension.html\'><span>Extensions</span></a>");
+} else {
+  document.writeln("            <a class=\'link mr10\' href=\'/extension.html\'><span>Extensions</span></a>");
+}
+
+if (pathname == '/updates.html') {
+  document.writeln("            <a class=\'link active mr00\' href=\'/updates.html\'><span>Updates</span></a>");
+} else {
+  document.writeln("            <a class=\'link mr00\' href=\'/updates.html\'><span>Updates</span></a>");
+}
+
+if (pathname == '/docs.html') {
+  document.writeln("            <a class=\'link active mr00 doc-link\'><span>Docs<i class='iconfont iconarrow-01'></i></span></a>");
+} else {
+  document.writeln("            <a class=\'link mr00 doc-link\'><span>Docs<i class='iconfont iconarrow-01'></i></span></a>");
+}
+/*
+if (pathname == '/community.html') {
+  document.writeln("            <a class=\'link active mr20\' href=\'/community.html\'><span>Community</span></a>");
+} else {
+  document.writeln("            <a class=\'link mr20\' href=\'/community.html\'><span>Community</span></a>");
+}
+*/
+if (pathname == '/faq.html') {
+  document.writeln("            <a class=\'link active mr20\' href=\'/faq.html\'><span>FAQ</span></a>");
+} else {
+  document.writeln("            <a class=\'link mr20\' href=\'/faq.html\'><span>FAQ</span></a>");
+}
+if (userName == '') {
+  document.writeln("            <a href=\'/user/login\' class=\'signClass\'>Sign in</a>");
+} else {
+  document.writeln("            <a href=\'javascript:;\' class=\'dorp\'>");
+  document.writeln("            <div class=\'loginAfter\'>");
+  document.writeln("              <img src=\'/static_front/img/Avatar.svg\'>");
+  document.writeln("              <span class=\'lgSpan\'>" + userName + "</span>");
+  document.writeln("              <i class=\'iconfont iconzzhedie lgI\'></i></div>");
+  document.writeln("              <ul class=\'dorp_con\'>");
+  document.writeln("                <li class=\'headerUrLi\'>Your profile</li>");
+  document.writeln("                <li class=\'headerSignOut\'>Sign out</li>");
+  document.writeln("              </ul>");
+  document.writeln("             </a>");
+  // <a class="dorp">
+  //                   <div class="loginAfter">
+  //                       <img src="./static_front/img/Avatar.svg" alt="">
+  //                       <span class="lgSpan">hpcppppppsfdggdggddg</span>
+  //                       <i class="iconfont iconzzhedie lgI lgxz"></i>
+  //                   </div>
+  //                   <ul class="dorp_con">
+  //                       <li class="wlsz">Your profile</li>
+  //                       <li class="jinsaoip">Sign out</li>
+  //                   </ul>
+  //               </a>
+}
+document.writeln("            <a href=\'http://cn.gobies.org\' class=\'to-toggle cn\'>CN</a>");
+document.writeln("            <a href=\'/#dl\' class=\'download\'>Download<i class=\'iconfont iconxiazai- ml\'></i></a>");
+document.writeln("          </div>");
+document.writeln("        </div>");
+document.writeln("      </div>");
+
+$(function () {
+  initClick();
+  initDropdown();
+})
+
+function initClick() {
+  $(".headerUrLi").click(function () {
+    window.location.href = "/member/index";
+  })
+  $(".headerSignOut").click(function () {
+    window.location.href = "/member/logout";
+  })
+  $(".dorp").hover(function () {
+    $(".dorp .iconzzhedie").addClass("lgxz");
+  }, function () {
+    $(".dorp .iconzzhedie").removeClass("lgxz");
+  })
+}
+
+function initDropdown() {
+  $('.doc-link').click(function(e) {
+    $(this).toggleClass("active");
+    $(".dropdown").toggle();
+    e.stopPropagation();
+  });
+
+  $('body').click(function() {
+    $('.doc-link').removeClass("active");
+    $(".dropdown").hide();
+  });
+}
